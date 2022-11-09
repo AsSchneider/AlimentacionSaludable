@@ -4,9 +4,9 @@ import "./ItemListContainer";
 import { useParams } from 'react-router-dom'; 
 import { useEffect } from 'react';
 
-export default function ItemListContainer({greeting}) {
-  const {idcategory} = useParams();
-  //const {iditem} = useParams ();
+export default function ItemDetailContainer({greeting}) {
+
+  const {iditem} = useParams ();
 
   const [productos, setProductos]= useState([]);
   let productosHC=[
@@ -22,17 +22,15 @@ export default function ItemListContainer({greeting}) {
 useEffect(() => {
   const productosPromise = new Promise((res, rej)=>{
     setTimeout(()=>{
-      res(productosHC)
+      res(productosHC.find((item) => item.id == iditem));
     
     }, 2000);
     });
     productosPromise.then((res) => {
-      if (idcategory) {
-        setProductos(res.filter((item) => item.catergory == idcategory));
-      } else {
+
       setProductos(res);
-}});
-}, [idcategory]);
+});
+}, [iditem]);
 
 
 
@@ -46,5 +44,3 @@ useEffect(() => {
     </div>
     );
   }
-  
-

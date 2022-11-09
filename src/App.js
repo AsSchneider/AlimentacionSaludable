@@ -1,18 +1,29 @@
-import './App.css';
-import Navbar from './components/Navbar';
-import ItemListContainer from './components/ItemListContainer';
-import Footer from './components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import './App.css';
+import Checkout from "./components/Checkout";
+import Contacto from "./components/Contacto";
+import Footer from './components/Footer';
+import ItemListContainer from './components/ItemListContainer';
+import ItemDetailContainer from "./components/ItemDetailContainer";
+import Navbar from './components/Navbar';
 
 function App() {
   return (
-    <div>
+    <BrowserRouter>
       <Navbar/>
-      <ItemListContainer greeting= "Hola React"/>
-      <ItemListContainer greeting= "Espero que seas facil!"/>
+      <Routes>
+        <Route path='/' element={<ItemListContainer/>} />
+        <Route path='/checkout' element={<Checkout/>} />
+        <Route path='/contacto' element={<Contacto/>} />
+        <Route path='/category/:idcategory' element={<ItemListContainer/>} />
+        <Route path='/item/:iditem' element={<ItemDetailContainer/>} />
+
+
+      </Routes>
       <Footer/>
 
-    </div>
+    </BrowserRouter>
   );
 }
 
