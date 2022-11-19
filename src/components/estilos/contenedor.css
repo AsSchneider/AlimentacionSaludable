@@ -1,0 +1,33 @@
+.logo {
+    width: 150px;
+    
+}
+
+.contenedorCard {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:space-around;
+    justify-items: center;
+}
+
+.cardDetail{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-items: center;
+}
+
+.load {
+    height: 50px;
+    width: 50px;
+}
+
+.contenedorLoad {
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    padding: 400px;
+}

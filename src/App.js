@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
-import Checkout from "./components/Checkout";
+
 import Contacto from "./components/Contacto";
 import Footer from './components/Footer';
 import ItemListContainer from './components/ItemListContainer';
@@ -14,13 +14,10 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path='/' element={<ItemListContainer/>} />
-        <Route path='/checkout' element={<Checkout/>} />
         <Route path='/contacto' element={<Contacto/>} />
-        <Route path='/category/:idcategory' element={<ItemListContainer/>} />
+        <Route path='/categoria/:idcategoria' element={<ItemListContainer/>} />
         <Route path='/item/:iditem' element={<ItemDetailContainer/>} />
-
-
-      </Routes>
+        </Routes>
       <Footer/>
 
     </BrowserRouter>

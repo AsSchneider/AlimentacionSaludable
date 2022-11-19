@@ -4,36 +4,34 @@ import "../App.css";
 import image from "../img/logo.jfif";
 import CartWidget from "./CartWidget";
 
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
 
 
-
-export default function Navbar() {
+function Navegador() {
   return (
-    <div>
-      <nav className="navbar bg-light">
-        <div className="container-fluid">
-          <img src={image} alt="" className="logo"/>
-          <ul>
-             <li>
-               <Link to="/">Home</Link>
-             </li>
-             <li>
-              <Link to="/Checkout">Checkout</Link>
-            </li>
-            <li>
-               <Link to="/contacto">Contacto</Link>
-             </li>
-             <li>
-               <Link to="category/varios">Veggie</Link>
-             </li>
-             <li>
-               <Link to="category/veggie">Varios</Link>
-             </li>
-          </ul>
-
-          <CartWidget />
-        </div>
-      </nav>
-    </div>
+    <Navbar expand="lg" variant="dark" style={{backgroundColor: "grey"}} >
+      <Container fluid>
+        <Navbar.Brand>
+          <Link to={`/`}><img src={image} alt="Logo del site" className="logo" /></Link>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse className="justify-content-end text-center">
+          <Nav>
+            <Link className="nav-link" to={`/`}>Inicio</Link>
+            <Link className="nav-link" to={`/contacto`}>Contacto</Link>
+            <NavDropdown title="Categoria" id="basic-nav-dropdown">
+              <Link className="nav-item dropdown dropdown-item" to={`/categoria/veggie`}>Veggie</Link>  
+              <Link className="nav-item dropdown dropdown-item" to={`/categoria/varios`}>Varios</Link>
+            </NavDropdown>
+            <CartWidget />
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
+
+export default Navegador;

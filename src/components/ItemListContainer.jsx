@@ -1,50 +1,51 @@
-import React from 'react'
-import { useState} from 'react';
-import "./ItemListContainer";
-import { useParams } from 'react-router-dom'; 
-import { useEffect } from 'react';
 
-export default function ItemListContainer({greeting}) {
-  const {idcategory} = useParams();
-  //const {iditem} = useParams ();
+import React from "react";
+import { Container } from "react-bootstrap";
+import ItemList from "./ItemList";
+import { useState, useEffect } from "react";
+import {listaProductos} from "./data.js";
+import {useParams} from "react-router-dom";
 
-  const [productos, setProductos]= useState([]);
-  let productosHC=[
-  {id:100, name:"Ensalada Cesar", category: "veggie", precio: 950},
-  {id:110, name: "Ensalada Italiana", catergory: "veggie", precio: 770},
-  {id:120, name: "Ensalada Libre", category: "veggie", precio: 790},
-  {id:130, name:"Ensalada Argenta", catergory: "veggie", precio: 770},
-  {id:200, name:"Calzone Carne", catergory: "varios", precio: 1350},
-  {id:210, name:"Calzone Pollo", catergory: "varios", precio: 1330},
-  {id:220, name:"Calzone Cerdo", catergory: "varios", precio: 1340},
-];
+function ItemListContainer (){
 
-useEffect(() => {
-  const productosPromise = new Promise((res, rej)=>{
-    setTimeout(()=>{
-      res(productosHC)
-    
-    }, 2000);
-    });
-    productosPromise.then((res) => {
-      if (idcategory) {
-        setProductos(res.filter((item) => item.catergory == idcategory));
-      } else {
-      setProductos(res);
-}});
-}, [idcategory]);
+    const { idcategoria } = useParams();
 
+    const [prod, setProd] = useState([]);
 
+   useEffect(() => {
+    let dateList = new Promise((res, rej) => {    
+        setTimeout(() => {
+            res(listaProductos)
+        }, 3000);
+    })
+
+    dateList.then((res) => {
+        if (idcategoria){
+            setProd(res.filter((item) => item.categoria === idcategoria));
+        }else {
+            setProd(res)
+        }
+    })
+    .catch((e) =>{
+        console.log("Error");
+    })
+    .finally(() => {
+        console.log("Proceso exitoso");
+    })
+}, [idcategoria]) 
 
 
-  return (
-    <div>
-      {!productos.length && "Loadding..."}
-      {productos.map((item) => (
-      <>{JSON.stringify(item)}</>
-      ))}
-    </div>
+    return (
+        <Container fluid className="p-2" style={{
+            backgroundSize: "cover",
+            color: "white"}}>
+
+            <div className="text-center">
+                <ItemList items={prod} idcategoria={idcategoria} />  
+            </div>
+        </Container>
     );
-  }
-  
+}
+
+export default ItemListContainer;
 
