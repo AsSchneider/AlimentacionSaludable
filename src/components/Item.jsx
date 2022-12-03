@@ -7,7 +7,7 @@ export default function Item({ producto }) {
     <Container className="m-3">
       <Card style={{ width: '18rem', color:"black"}}>
           <Card.Header> {`${producto.categoria}`} </Card.Header>
-          <Card.Img src= {producto.img} style={{height:"280px"}} />
+          <Card.Img src= {producto.imgUrl} style={{height:"280px"}} />
           <Card.Body>
               <Card.Title> {producto.nombre} </Card.Title>
               <Card.Text>$ {producto.precio} </Card.Text>

@@ -3,8 +3,8 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import ItemList from "./ItemList";
 import { useState, useEffect } from "react";
-import {listaProductos} from "./data.js";
 import {useParams} from "react-router-dom";
+import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
 
 function ItemListContainer (){
 
@@ -13,25 +13,22 @@ function ItemListContainer (){
     const [prod, setProd] = useState([]);
 
    useEffect(() => {
-    let dateList = new Promise((res, rej) => {    
-        setTimeout(() => {
-            res(listaProductos)
-        }, 3000);
-    })
+    const db = getFirestore();
+    let producto;
 
-    dateList.then((res) => {
-        if (idcategoria){
-            setProd(res.filter((item) => item.categoria === idcategoria));
-        }else {
-            setProd(res)
+    idcategoria 
+    ? producto = query(collection(db, "producto"), where("categoria", "==", idcategoria))
+    : producto = collection(db , "producto");
+
+    getDocs(producto).then((res) => {
+        const arrayDeProducto = res.docs.map(producto => {
+        return {
+            id: producto.id , ...producto.data()
         }
     })
-    .catch((e) =>{
-        console.log("Error");
-    })
-    .finally(() => {
-        console.log("Proceso exitoso");
-    })
+    setProd(arrayDeProducto);
+})
+    
 }, [idcategoria]) 
 
 

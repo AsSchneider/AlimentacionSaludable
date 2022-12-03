@@ -1,13 +1,27 @@
-import React from 'react';
-import { Button, Container } from 'react-bootstrap';
+import React, { useContext,useState } from 'react';
+import { Container } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Spinner from 'react-bootstrap/Spinner';
 import "./estilos/contenedor.css";
+import ItemCount from "./ItemCount.jsx";
+import { Link } from 'react-router-dom';
+import { cartContext } from "./CartContext";
 
 
 function ItemDetail({ producto }) {
+  const [bolsa, setBolsa] = useState(false);
+
+  const {carrito, addItem} = useContext(cartContext);
+  console.log(carrito);
+
+  const onAdd  = (cantidad) => {
+    console.log(`se agrego ${cantidad} unidades de ${producto.nombre} `);
+    addItem(producto, cantidad)
+    setBolsa(true)
+  }
+
   return (
     <Container className="text-center cardDetail">
         {producto.id ? (
@@ -15,7 +29,7 @@ function ItemDetail({ producto }) {
           <Card.Header as="h5">{producto.categoria} </Card.Header>
           <Row>
             <Col>
-              <Card.Img variant="top" src={producto.img} />
+              <Card.Img variant="top" src={producto.imgUrl} />
             </Col>
             <Col>
               <Card.Body>
@@ -34,9 +48,15 @@ function ItemDetail({ producto }) {
               </Card.Text>
               <Card.Text className='h5'>$ {producto.precio} </Card.Text>
               <Card.Text>Stock ({producto.stock} unidades) </Card.Text>
-
-              <Button>Agregar al carrito</Button>
               </Card.Body>
+              <Card.Body>
+                {bolsa 
+                ? <div>
+                  <Link className="btn btn-dark" to="/Cart" >Finalizar Compra</Link>
+                  <Link className="btn btn-info text-white" to="/">Seguir Comprando</Link>
+                </div>
+                : <ItemCount initial={1} stock={producto.stock} onAdd={onAdd} /> }
+                </Card.Body>
             </Col>
         </Row> 
         </Card>
